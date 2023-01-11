@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ROUTES } from "./constants/route-links";
 import Login from "./pages/auth/login/Login";
+import Auth from "./pages/auth/Auth";
 import LandingPage from "./pages/landing-page/LandingPage";
 import Register from "./pages/auth/register/Register";
 import { API_HANDLER } from "./util/api-handler";
@@ -20,8 +21,7 @@ function App() {
       <Routes>
         {/*====== Non Protected routes ====== */}
         <Route path={ROUTES.base.route} element={<LandingPage />} />
-        <Route path={ROUTES.login.route} element={<Login />} />
-        <Route path={ROUTES.register.route} element={<Register />} />
+        <Route path={ROUTES.auth.route} element={<Auth />} />
 
         {/*====== Protected routes ======  */}
         <Route element={<ProtectedRoutes />}>
