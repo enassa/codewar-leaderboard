@@ -1,0 +1,36 @@
+name: Trigger Publishing on Success Test event
+
+on:
+  workflow_run:
+    workflows: ['Unit/Integration Test Run']
+    types:
+      - completed
+
+jobs:
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'Your test may have failed'
+
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    name: Publish image to Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{secrets.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
+
+
+      - name: Push image to Dockerhub
+        uses: docker/build-push-action@v3
+        with:
+          context:  .
+          push: true
+          tags: toukunya/codl-ui:latest
