@@ -13,6 +13,9 @@ import kotlin from "./kotlin.png";
 import java from "./java.png";
 import comment from "../svg/comment.svg";
 import bgImage from "../svg/appbgImg.svg";
+import elixir from "./elixir.png";
+import ruby from "./ruby.png";
+import php from "./php.png";
 
 export const images = {
   dummyProfile,
@@ -30,4 +33,7 @@ export const images = {
   kotlin,
   comment,
   bgImage,
+  elixir,
+  php,
+  ruby,
 };

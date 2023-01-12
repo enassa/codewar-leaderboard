@@ -22,6 +22,7 @@ export default function ComboInput({
   dropClassName,
   icon,
   defaultIcon,
+  getSelected,
 }) {
   const inputRef = React.createRef();
   const [dropOptions, setDropOptions] = useState();
@@ -46,6 +47,7 @@ export default function ComboInput({
           onClick={() => {
             setSearchValue(option[displayProperty]);
             setSelected(option[displayProperty]);
+            getSelected(option[displayProperty]);
             if (option[displayProperty] === selected) return;
             error && setError(false);
             setDropOptions(false);
@@ -121,7 +123,9 @@ export default function ComboInput({
             e.stopPropagation();
           }}
           autoComplete="off"
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+          }}
           className={` ${className} h-full p-3 capitalize  rounded-[5px] outline-none`}
           type={type}
           placeholder={placeholder}

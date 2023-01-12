@@ -13,7 +13,7 @@ import LeaderBoard from "./pages/leaderbaord/LeaderBoard";
 import Accounts from "./pages/accounts/Accounts";
 import Auth from "./pages/auth/Auth";
 
-export const API = new API_HANDLER(process.env.REACT_APP_BASE_URL);
+export const API = new API_HANDLER("http://3.20.164.31:8080");
 function App() {
   return (
     <Router>

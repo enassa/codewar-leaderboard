@@ -1,46 +1,89 @@
-import React, { useState } from "react";
-import { usersDummyData } from "../../constants/app-data";
+import React, { useEffect, useState } from "react";
+import { headers, usersDummyData } from "../../constants/app-data";
 import TableRow from "./table/TableRow";
+import ComboInput from "./../../components/combo-input-box/ComboInput";
+import { languages, getLanguageIcon } from "./../../constants/app-data";
+import { useBoardService } from "./../../store-and-services/boarddata-slice/board-service";
+import SlimLoader from "./../../components/slim-loader/SlimLoader";
+
 import {
   ChevronLeft,
   ChevronRight,
   IntegrationInstructions,
 } from "@mui/icons-material";
-import ComboInput from "./../../components/combo-input-box/ComboInput";
-import { languages, getLanguageIcon } from "./../../constants/app-data";
 
 export default function LeaderBoard() {
+  const [boardType, setBoardType] = useState("honor");
+  const {
+    getUsersByHonor,
+    getUsersByOverall,
+    getUsersByLanguage,
+    boardList,
+    loadingBoard,
+  } = useBoardService();
+
+  useEffect(() => {
+    getUsersByHonor();
+  }, []);
+  const [rowsToDisplay, setRowsToDisplay] = useState(5);
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const calcNumOfPages = Math.ceil(usersDummyData.length / rowsToDisplay);
+  const numberOfPages = calcNumOfPages ? calcNumOfPages : 1;
+
+  const tableData = boardList;
+  const paginatedData = () => {
+    return tableData.slice(
+      currentPageNumber * rowsToDisplay - rowsToDisplay,
+      currentPageNumber * rowsToDisplay
+    );
+  };
+  const increasePageNumber = () => {
+    if (currentPageNumber < numberOfPages) {
+      setCurrentPageNumber(currentPageNumber + 1);
+    }
+  };
+  const decreasePageNumber = () => {
+    if (currentPageNumber !== 1) {
+      setCurrentPageNumber(currentPageNumber - 1);
+    }
+  };
   const ejectTableRows = () => {
-    return usersDummyData.map((data, index) => {
+    return paginatedData().map((data, index) => {
       return <TableRow key={index} rowData={data} position={index} />;
     });
   };
   const ejectTableHeades = () => {
-    const headers = [
-      "Profile",
-      "User Name",
-      "Rank",
-      "Clan",
-      "Language",
-      "Honor",
-      "Position",
-      "Actions",
-    ];
     return headers.map((data, index) => {
       const headerStyle =
         data === "Language" || data === "Actions" ? "justify-center" : "";
+      const getHeader = (header) => {
+        if (boardType === "rank") {
+          return header === "Honor" ? "Scores" : data;
+        }
+        return data;
+      };
       return (
         <td className={headerStyle} key={index}>
           <div className={`w-full h-full flex text-gray-500 ${headerStyle}`}>
-            {data}
+            {getHeader(data)}
           </div>
         </td>
       );
     });
   };
-  const [boardType, setBoardType] = useState("honor");
-  const changeBoardType = (board) => {
+
+  const changeBoardType = (board, language) => {
     setBoardType(board);
+    switch (board) {
+      case "honor":
+        return getUsersByHonor();
+      case "rank":
+        return getUsersByOverall();
+      case "language":
+        return getUsersByLanguage(language);
+      default:
+        break;
+    }
   };
 
   const getLanguagesObject = () => {
@@ -60,6 +103,7 @@ export default function LeaderBoard() {
     });
     return langObj;
   };
+
   return (
     <div className="w-full h-full flex px-[50px] flex-col pb-[20px]">
       <div className="w-full h-[50px] flex justify-start items-center mb-[20px]">
@@ -103,6 +147,9 @@ export default function LeaderBoard() {
                   label=""
                   name="language"
                   data={getLanguagesObject()}
+                  getSelected={(value) => {
+                    changeBoardType("language", value);
+                  }}
                   displayProperty={"name"}
                   value={"Overall"}
                   noBorder
@@ -114,19 +161,39 @@ export default function LeaderBoard() {
         </div>
 
         <div className="flex justify-center items-center">
-          <span className="mr-2">1 - 50 of 373</span>
+          <span className="mr-2">
+            {currentPageNumber === 1 ? 1 : currentPageNumber + rowsToDisplay} -{" "}
+            {rowsToDisplay * currentPageNumber > tableData?.length
+              ? tableData?.length
+              : rowsToDisplay * currentPageNumber}{" "}
+            of {tableData?.length}
+          </span>
           <span className="ml-2">
-            <ChevronLeft className="cursor-pointer" />
-            <ChevronRight className="cursor-pointer" />
+            <ChevronLeft
+              className="cursor-pointer"
+              onClick={() => {
+                decreasePageNumber();
+              }}
+            />
+            <ChevronRight
+              className="cursor-pointer"
+              onClick={() => {
+                increasePageNumber();
+              }}
+            />
           </span>
         </div>
       </div>
 
       {/* Table Entry Point */}
-      <div className="w-full h-full bg-[#F8FAFF] overflow-auto px-3">
+      <div className="w-full h-full bg-[#F8FAFF] overflow-auto overflow-x-hidden px-3 relative">
         <div className="w-full h-full">
           <table className="w-full ">
-            <thead className="sticky shadow-sm top-0 bg-[#F8FAFF] z-[2] h-[60px] mb-[20px] border-b-2 border-b-gray-200">
+            <thead className="sticky shadow-sm top-0 bg-[#F8FAFF] z-[2] h-[60px] mb-[20px] border-b-2 border-b-gray-200 overflow-x-hidden">
+              <div className="w-full h-[5px] absolute  ">
+                {loadingBoard && <SlimLoader />}
+              </div>
+              <div></div>
               <tr>{ejectTableHeades()}</tr>
             </thead>
             <tbody>{ejectTableRows()}</tbody>

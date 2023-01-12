@@ -18,6 +18,7 @@ export default function Register(props) {
     useAuthService();
 
   function handleRegisterData(event) {
+    event.preventDefault();
     setRegisterFormData((prevFormData) => {
       return {
         ...prevFormData,

@@ -30,7 +30,8 @@ export default function Login(props) {
     });
   }
 
-  function handleLogin() {
+  function handleLogin(e) {
+    e.preventDefault();
     const data = {
       email: loginFormData.loginEmail,
       password: loginFormData.loginPassword,

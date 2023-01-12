@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardList: [],
+  languages: [],
 };
 export const boardDataSlice = createSlice({
   name: "boardData_SLICE",
   initialState,
   reducers: {
-    addUserToBoard: (state, { payload }) => {
-      state.boardList.push(payload);
+    addUsersToBoard: (state, { payload }) => {
+      state.boardList = payload;
     },
     deleteUserFromBoard: (state, { payload }) => {
       // code goes here
@@ -21,13 +22,18 @@ export const boardDataSlice = createSlice({
     addCommentToUser: (state, { payload }) => {
       // code goes here
     },
+    setLanguages: (state, { payload }) => {
+      state.languages = payload;
+    },
   },
 });
 export const {
-  addUserToBoard,
+  addUsersToBoard,
+  boardList,
   deleteUserFromBoard,
   updateUserOnData,
   addCommentToUser,
   deleteCommentFromUser,
+  setLanguages,
 } = boardDataSlice.actions;
 export default boardDataSlice.reducer;

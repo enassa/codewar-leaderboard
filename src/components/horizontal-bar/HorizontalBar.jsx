@@ -34,7 +34,7 @@ export default function THorizontalBar({ children }) {
     <div className="relative w-full">
       <div
         ref={containerRef}
-        className="flex h-[150px] scrollbar-hidden justify-start items-center overflow-auto w-full px-[20px] bg-white shadow-neumoNav  rounded-[20px] relative"
+        className="flex h-[150px] scrollbar-hidden justify-start items-center overflow-auto w-full px-[20px]  shadow-neumoNav  rounded-[20px] relative"
       >
         {children}
       </div>
@@ -44,7 +44,7 @@ export default function THorizontalBar({ children }) {
       >
         <ArrowLeft
           style={{ fontSize: 50 }}
-          className="pointer-events-none text-[#498AFD]"
+          className="pointer-events-none text-transparent"
         />
       </div>
       <div
@@ -53,7 +53,7 @@ export default function THorizontalBar({ children }) {
       >
         <ArrowRight
           style={{ fontSize: 50 }}
-          className="pointer-events-none text-[#498AFD]"
+          className="pointer-events-none text-transparent"
         />
       </div>
     </div>

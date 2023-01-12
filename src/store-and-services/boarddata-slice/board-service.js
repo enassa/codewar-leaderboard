@@ -1,0 +1,75 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { END_POINTS } from "./../../constants/urls";
+import { API } from "../../App";
+import { addUsersToBoard, setLanguages } from "./boarddata-slice";
+
+export const useBoardService = () => {
+  const boardList = useSelector((state) => state?.boardDataSlice?.boardList);
+  const languages = useSelector((state) => state?.boardDataSlice?.languages);
+  const dispatch = useDispatch();
+
+  const [loadingBoard, setLoading] = useState(false);
+
+  const getUsersByHonor = async (data) => {
+    setLoading(true);
+    return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByHonor, data)
+      .then(async (response) => {
+        return response?.data;
+      })
+      .then(async (response) => {
+        console.log(response);
+        if (!Array.isArray(response)) return;
+        dispatch(addUsersToBoard(response));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const getUsersByOverall = async (data) => {
+    setLoading(true);
+    return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardOverAll)
+      .then(async (response) => {
+        return response?.data;
+      })
+      .then(async (response) => {
+        console.log(response.scores);
+        if (!Array.isArray(response.scores)) return;
+        dispatch(addUsersToBoard(response.scores));
+        dispatch(setLanguages(response.scores));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const getUsersByLanguage = async (data) => {
+    setLoading(true);
+    return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByLanguage(data))
+      .then(async (response) => {
+        return response?.data;
+      })
+      .then(async (response) => {
+        console.log(response);
+        if (!Array.isArray(response)) return;
+        dispatch(addUsersToBoard(response));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  return {
+    getUsersByHonor,
+    getUsersByOverall,
+    getUsersByLanguage,
+    boardList,
+    loadingBoard,
+  };
+};
