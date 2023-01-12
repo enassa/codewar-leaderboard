@@ -6,6 +6,14 @@ export const ROUTES = {
   },
 
   // =============== AUTH ROUTES ===============
+  register: {
+    route: "/register",
+    url: "/register",
+  },
+  login: {
+    route: "/login",
+    url: "/login",
+  },
   forgotPassword: {
     route: "/forgot-password",
     url: "/forgot-password",
@@ -16,9 +24,9 @@ export const ROUTES = {
   },
 
   //===============  PROTECTED ROUTES ===============
-  dashboard: {
-    route: "/dashboard",
-    url: "/dashboard",
+  accounts: {
+    route: "/accounts",
+    url: "/accounts",
   },
   leaderboard: {
     route: "/leaderboard",

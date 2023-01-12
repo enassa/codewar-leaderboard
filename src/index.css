@@ -3,6 +3,39 @@
 @tailwind components;
 @tailwind utilities;
 
+.hexagon::before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 8px solid #9e7200;
+  border-top: 13px solid red;
+  border-bottom: 13px solid green;
+  position: absolute;
+  left: -8px;
+  z-index: 0;
+}
+/* .hexagon-2::before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-right: 13px solid #9e7200;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  position: absolute;
+  left: -4px;
+  z-index: 0;
+} */
+.hexagon::after {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-left: 8px solid #9e7200;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  position: absolute;
+  right: -8px;
+  z-index: 0;
+}
 .fit-bg {
   background-position: center;
   background-size: cover;
@@ -211,3 +244,4 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px transparent inset !important;
 }
+/* Rectangle 104 */

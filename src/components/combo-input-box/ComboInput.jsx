@@ -66,7 +66,7 @@ export default function ComboInput({
             <img alt="" className="h-[50%] mr-3" src={option?.icon} />
           )}
 
-          <span className="w-full whitespace-nowrap text-ellipsis overflow-hidden">
+          <span className="w-full whitespace-nowrap text-ellipsis overflow-hidden capitalize">
             {option[displayProperty]}
           </span>
         </div>
@@ -75,9 +75,15 @@ export default function ComboInput({
   };
 
   const errorClass = "text-red-400 text-xs mt-1";
-
+  const getIcon = (language) => {
+    const selectedIcon = data.find(
+      (item) => item[displayProperty] === language
+    );
+    return selectedIcon?.icon;
+  };
+  const selectedIcon = getIcon(selected);
   return (
-    <div className="w-full flex flex-col justify-start mb-2 relative">
+    <div className="w-full flex flex-col justify-start relative">
       <label
         htmlFor={name}
         className="w-full text-gray-900 relative b-[30px] text-[18px]"
@@ -92,6 +98,18 @@ export default function ComboInput({
           disabled && "bg-gray-100"
         } h-[40px] flex flex-row items-center w-full border-[#8b8b8b] border-[1px] rounded-[5px] outline-none cursor-pointer`}
       >
+        {typeof selectedIcon === "object" && (
+          <div className="mr-3">{selectedIcon ?? defaultIcon}</div>
+        )}
+        {typeof selectedIcon !== "object" &&
+          typeof defaultIcon === "object" && (
+            <div className="mr-3 text-gray-600 ml-2">
+              {selectedIcon ?? defaultIcon}
+            </div>
+          )}
+        {typeof selectedIcon === "string" && (
+          <img alt="" className="h-[50%] mr-3 ml-2" src={selectedIcon} />
+        )}
         <input
           ref={inputRef}
           onFocusCapture={(e) => {
@@ -102,9 +120,9 @@ export default function ComboInput({
           onClick={(e) => {
             e.stopPropagation();
           }}
-          autocomplete="off"
+          autoComplete="off"
           onChange={(e) => setSearchValue(e.target.value)}
-          className={` ${className} h-full p-3  rounded-[5px] outline-none`}
+          className={` ${className} h-full p-3 capitalize  rounded-[5px] outline-none`}
           type={type}
           placeholder={placeholder}
           name={name}
@@ -138,7 +156,7 @@ export default function ComboInput({
           }}
         >
           <div
-            className={`w-full rounded-md animate-rise bg-white shadow-neumoNav z-[10] max-h-[160px] overflow-y-auto  flex flex-col absolute top-[110%] ${dropClassName}   ${
+            className={`w-full rounded-md animate-rise bg-white shadow-neumoNav z-[20] max-h-[160px] overflow-y-auto  flex flex-col absolute top-[110%] ${dropClassName}   ${
               !noBorder && "border-t-black border-t-4"
             } `}
           >

@@ -30,6 +30,7 @@ export const useAuthService = () => {
   };
 
   const processLoginSuccess = (response) => {
+    console.log(response);
     saveObjectInLocalStorage("tfx3213UserData", {
       ...response.data.data,
       token: response.data.token,
@@ -41,12 +42,11 @@ export const useAuthService = () => {
       })
     );
     API.setToken(response.data.token);
-    navigate(ROUTES.leaderboard.url);
+    navigate(ROUTES.dashboard.url);
   };
 
   const processFailedAuth = (error, response, page) => {
     setLoading(false);
-
     if (error === "unknown") {
       dispatch(
         setAuthResponse({
@@ -74,16 +74,14 @@ export const useAuthService = () => {
     setLoading(true);
     return API.POST(END_POINTS.login, data)
       .then(async (response) => {
-        if(response.status === 401){
-          processFailedAuth("", {message: "Invalid Credentials! Try again"},"login");
-          return;
-        }
         if (response.data.success) {
           processLoginSuccess(response.data);
-        } 
+        } else {
+          processFailedAuth(response.data);
+        }
       })
       .catch((error) => {
-        processFailedAuth("unknown",error,"login");
+        processFailedAuth("unknown", "login");
       })
       .finally(() => {});
   };
@@ -91,7 +89,8 @@ export const useAuthService = () => {
   const registerAsync = async (data) => {
     setLoading(true);
     return API.POST(END_POINTS.register, {
-      username: data.username,
+      firstName: data.first_name,
+      lastName: data.last_name,
       email: data.email,
       password: data.password,
     })
@@ -105,7 +104,6 @@ export const useAuthService = () => {
               page: "register",
             })
           );
-          processLoginSuccess(response.data);
           return;
         } else {
           processFailedAuth("credentials", response.data, "register");

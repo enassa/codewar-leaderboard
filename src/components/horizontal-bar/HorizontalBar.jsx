@@ -1,4 +1,9 @@
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+} from "@mui/icons-material";
 import React from "react";
 
 export default function THorizontalBar({ children }) {
@@ -29,21 +34,27 @@ export default function THorizontalBar({ children }) {
     <div className="relative w-full">
       <div
         ref={containerRef}
-        className="flex h-[150px] rounded-md scrollbar-hidden justify-start items-center overflow-auto w-full px-[20px] bg-white shadow-neumoNav  rounded-[20px] relative"
+        className="flex h-[150px] scrollbar-hidden justify-start items-center overflow-auto w-full px-[20px] bg-white shadow-neumoNav  rounded-[20px] relative"
       >
         {children}
       </div>
       <div
         onClick={() => scrollRight()}
-        className="absolute cursor-pointer top-[34%] left-[-10px] w-[40px] h-[40px] rounded-full bg-white shadow-md flex justify-center items-center"
+        className="absolute cursor-pointer top-[34%] left-[-10px] w-[40px] h-[40px] rounded-full  flex justify-center items-center"
       >
-        <ChevronLeft className="pointer-events-none" />
+        <ArrowLeft
+          style={{ fontSize: 50 }}
+          className="pointer-events-none text-[#498AFD]"
+        />
       </div>
       <div
         onClick={() => scrollLeft()}
-        className="absolute cursor-pointer top-[34%] right-[-10px] w-[40px] h-[40px] rounded-full bg-white shadow-md flex justify-center items-center"
+        className="absolute cursor-pointer top-[34%] right-[-10px] w-[40px] h-[40px] rounded-full flex justify-center items-center"
       >
-        <ChevronRight className="pointer-events-none" />
+        <ArrowRight
+          style={{ fontSize: 50 }}
+          className="pointer-events-none text-[#498AFD]"
+        />
       </div>
     </div>
   );

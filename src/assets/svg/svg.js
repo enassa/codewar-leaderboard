@@ -1,10 +1,9 @@
-import loginSvg from "./tradesvg.svg";
-import { ReactComponent as SVGImage } from "./BgSVG.svg";
-import { ReactComponent as LadySvg } from "./ladySvg.svg";
-import { ReactComponent as SpinTarget } from "./targetArrowSVG.svg";
+import { ReactComponent as Hexagon } from "./Hexagon.svg";
+import { ReactComponent as Crown } from "./queeny.svg";
+import { ReactComponent as Comment } from "./comment.svg";
 
 export const svgs = {
-  loginSvg: <SVGImage className="" />,
-  ladySvg: <LadySvg className="" />,
-  spinTarget: <SpinTarget className="" />,
+  Hexagon: <Hexagon className="" />,
+  Crown: <Crown />,
+  Comment: <Comment />,
 };
