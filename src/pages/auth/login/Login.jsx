@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Error,
-} from "@mui/icons-material";
+import { Error } from "@mui/icons-material";
 import "./login.css";
 import { emailRegex } from "../../../constants/reusable-functions";
 import { useState } from "react";
@@ -60,7 +58,6 @@ export default function Login(props) {
             onChange={handleLoginData}
             onBlur={() => setEmailTouched(true)}
             name="loginEmail"
-            required
             pattern={emailRegex()}
           />
         </div>
@@ -93,7 +90,7 @@ export default function Login(props) {
           !loadingAuth && (
             <div className="w-full mt-[20px] h-[5px]">
               <div className="w-full  bottom-[10%] right-0 flex  justify-center items-center text-red-400 animate-rise">
-                <Error className="text-red-400 mr-2" />
+                <Error className="text-maroon-400 mr-2" />
                 {authResponse?.message}.
               </div>
             </div>
