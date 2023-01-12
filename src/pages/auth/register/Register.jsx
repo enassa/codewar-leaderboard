@@ -1,12 +1,6 @@
 import React from "react";
 import "../login/login.css";
-import {
-  RemoveRedEyeOutlined,
-  AlternateEmailOutlined,
-  LoginSharp,
-  LockOutlined,
-  Error,
-} from "@mui/icons-material";
+import { Error } from "@mui/icons-material";
 import { emailRegex } from "../../../constants/reusable-functions";
 import { useState } from "react";
 import { images } from "./../../../assets/images/images";
@@ -14,9 +8,8 @@ import { images } from "./../../../assets/images/images";
 import { useAuthService } from "../../../store-and-services/auth-slice/auth-service";
 
 export default function Register(props) {
-  const { loginAsync, loadingAuth, authResponse, userIsLoggedIn } =
+  const { registerAsync, loadingAuth, authResponse } =
     useAuthService();
-
 
   function handleRegisterData(event) {
     setRegisterFormData((prevFormData) => {
@@ -34,12 +27,34 @@ export default function Register(props) {
     registerConfirmPassword: "",
   });
 
-  function handleSignUp() {}
+  const [emailTouched, setEmailTouched] = useState(false);
+  const emailValid = registerFormData.registerEmail.match(emailRegex());
+
+  const [usernameTouched, setUsernameTouched] = useState(false);
+  const usernameValid = registerFormData.registerUsername.length > 2;
+
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const passwordValid = registerFormData.registerPassword.length > 6;
+
+  const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
+  const confirmPasswordValid =
+    registerFormData.registerConfirmPassword ===
+    registerFormData.registerPassword;
+
+  function handleSignUp() {
+    const data = {
+      username: registerFormData.registerUsername,
+      email: registerFormData.registerEmail,
+      password: registerFormData.registerPassword,
+    };
+
+    registerAsync(data);
+  }
 
   return (
     <div
       className={`register__container container vertical-center no_display  ${
-        props.show ? "fade-up" : "fade-out"
+        !props.showOnOpen ?  (props.show ? "fade-up" : "fade-out") : ""
       }`}
     >
       <h1>Create an account</h1>
@@ -53,8 +68,14 @@ export default function Register(props) {
             value={registerFormData.registerUsername}
             onChange={handleRegisterData}
             name="registerUsername"
+            onBlur={() => setUsernameTouched(true)}
           />
         </div>
+        {usernameTouched ? (
+          !usernameValid ? (
+            <div className="field_error">Invalid Username!</div>
+          ) : null
+        ) : null}
 
         <label htmlFor="registerEmail">Email Address*</label>
         <div className="input-area">
@@ -64,8 +85,14 @@ export default function Register(props) {
             value={registerFormData.registerEmail}
             onChange={handleRegisterData}
             name="registerEmail"
+            onBlur={() => setEmailTouched(true)}
           />
         </div>
+        {emailTouched ? (
+          !emailValid ? (
+            <div className="field_error">Invalid Email!</div>
+          ) : null
+        ) : null}
 
         <label htmlFor="registerPassword">Password*</label>
         <div className="input-area">
@@ -75,8 +102,14 @@ export default function Register(props) {
             value={registerFormData.registerPassword}
             onChange={handleRegisterData}
             name="registerPassword"
+            onBlur={() => setPasswordTouched(true)}
           />
         </div>
+        {passwordTouched ? (
+          !passwordValid ? (
+            <div className="field_error">Invalid Password!</div>
+          ) : null
+        ) : null}
 
         <label htmlFor="registerConfirmPassword">Confirm Password*</label>
         <div className="input-area">
@@ -86,11 +119,40 @@ export default function Register(props) {
             value={registerFormData.registerConfirmPassword}
             onChange={handleRegisterData}
             name="registerConfirmPassword"
+            onBlur={() => setConfirmPasswordTouched(true)}
+            required
           />
         </div>
+        {confirmPasswordTouched ? (
+          !confirmPasswordValid ? (
+            <div className="field_error">Passwords do not match!</div>
+          ) : null
+        ) : null}
 
-        <button onClick={handleSignUp} className="btn">
-          Create an Account
+        {authResponse?.message !== undefined &&
+          authResponse.page === "login" &&
+          !loadingAuth && (
+            <div className="w-full mt-[20px] h-[5px]">
+              <div className="w-full  bottom-[10%] right-0 flex  justify-center items-center text-red-400 animate-rise">
+                <Error className="text-red-400 mr-2" />
+                {authResponse?.message}.
+              </div>
+            </div>
+          )}
+
+        <button
+          onClick={handleSignUp}
+          className="btn"
+          disabled={
+            loadingAuth ||
+            !emailValid ||
+            !passwordValid ||
+            !usernameValid ||
+            !confirmPasswordValid
+          }
+        >
+          {loadingAuth && "Creating Account"}
+          {!loadingAuth && "Create an Account"}
         </button>
         <p className="bottom-text">
           Already have an Account?
