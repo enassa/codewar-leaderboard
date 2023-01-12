@@ -97,7 +97,7 @@ export default function LeaderBoard() {
           </div>
           <div className="h-[60px] flex z-[3]">
             {boardType === "rank" && (
-              <div className="h-full flex items-center animate-rise mt-[10px]">
+              <div className="h-full flex items-center animate-rise mb-[10px]">
                 <ComboInput
                   placeholder="Select Language"
                   label=""

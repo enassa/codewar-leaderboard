@@ -42,7 +42,7 @@ export const useAuthService = () => {
       })
     );
     API.setToken(response.data.token);
-    navigate(ROUTES.dashboard.url);
+    navigate(ROUTES.leaderboard.url);
   };
 
   const processFailedAuth = (error, response, page) => {

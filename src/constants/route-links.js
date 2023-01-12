@@ -6,13 +6,17 @@ export const ROUTES = {
   },
 
   // =============== AUTH ROUTES ===============
-  register: {
-    route: "/register",
-    url: "/register",
+  auth: {
+    route: "/auth",
+    url: "/auth",
   },
   login: {
     route: "/login",
     url: "/login",
+  },
+  register: {
+    route: "/register",
+    url: "/register",
   },
   forgotPassword: {
     route: "/forgot-password",

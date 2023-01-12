@@ -12,6 +12,6 @@ export function ProtectedRoutes() {
       <Outlet />
     </TPageWrapper>
   ) : (
-    <Navigate to={ROUTES.login.url} />
+    <Navigate to={ROUTES.base.url} />
   );
 }

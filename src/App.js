@@ -11,6 +11,7 @@ import ErrorPage from "./pages/error-page/ErrorPage";
 import { ProtectedRoutes } from "./components/protected-routes/ProtectedRoutes";
 import LeaderBoard from "./pages/leaderbaord/LeaderBoard";
 import Accounts from "./pages/accounts/Accounts";
+import Auth from "./pages/auth/Auth";
 
 export const API = new API_HANDLER(process.env.REACT_APP_BASE_URL);
 function App() {
@@ -19,9 +20,9 @@ function App() {
       <ToastContainer />
       <Routes>
         {/*====== Non Protected routes ====== */}
-        <Route path={ROUTES.base.route} element={<LandingPage />} />
-        <Route path={ROUTES.login.route} element={<Login />} />
-        <Route path={ROUTES.register.route} element={<Register />} />
+        <Route path={ROUTES.login.route} element={<Auth />} />
+        <Route path={ROUTES.register.route} element={<Auth />} />
+        <Route path={ROUTES.auth.route} element={<Auth />} />
 
         {/*====== Protected routes ======  */}
         <Route element={<ProtectedRoutes />}>
