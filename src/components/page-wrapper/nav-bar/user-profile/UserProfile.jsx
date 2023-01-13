@@ -19,13 +19,11 @@ export default function TUserProfile() {
           }}
           className="w-[30px] h-[30px] bg-blue-400 text-white font-extrabold capitalize mr-[10px] rounded-full flex justify-center fit-bg items-center overflow-hidden"
         >
-          {userData?.firstName?.charAt(0)}
+          {userData?.name?.charAt(0)}
         </span>
       )}
 
-      <span>
-        {userData?.firstName} {userData?.lastName}
-      </span>
+      <span>{userData?.name}</span>
 
       {dropProfile ? (
         <ExpandLessOutlined

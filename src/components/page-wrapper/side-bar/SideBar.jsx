@@ -10,7 +10,8 @@ export default function TSideBar({ menuItems = [] }) {
   const navigate = useNavigate();
   const { logOut, userData } = useAuthService();
   // ================ get active route from url ================
-  const activeMenu = useLocation().pathname.split("/")[2];
+  const activeMenu = useLocation().pathname.split("/")[1];
+  console.log(activeMenu);
   const menuList =
     Array.isArray(menuItems) && menuItems.length ? menuItems : defaultMenuList;
   const MenuItem = ({ menuItem }) => {
@@ -26,10 +27,10 @@ export default function TSideBar({ menuItems = [] }) {
           navigate(menuItem?.url);
         }}
         className={`${
-          activeMenu === menuItem.route
-            ? "bg-[#F5F7F9]  text-[#000]"
+          activeMenu === menuItem.text
+            ? "bg-[#F5F7F9]  text-blue-700"
             : "hover:bg-[#F5F7F9] text-[#374F63]"
-        } flex px-[9px] w-full items-center mb-3 justify-center transition-all rounded-md cursor-pointer hover:text-[#202e3a] h-[43px] overflow-hidden`}
+        } flex px-[9px] w-full items-center mb-3 justify-center transition-all rounded-md cursor-pointer hover:text-blue-400 h-[43px] overflow-hidden`}
       >
         <div className="flex justify-center items-center mr-2">
           <span style={{ fontSize: 25 }}>{menuItem?.icon}</span>

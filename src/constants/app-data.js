@@ -1,7 +1,8 @@
 import { images } from "./../assets/images/images";
 export const headers = [
   "Profile",
-  "User Name",
+  "UserName",
+  "Name",
   "Rank",
   "Clan",
   "Language",

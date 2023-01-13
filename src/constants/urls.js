@@ -8,7 +8,8 @@ export const END_POINTS = {
   getCodeWarUserProfile: (username) => `/leaderboard/user/find/${username}`,
   getLeaderBoardByHonor: "/leaderboard/rank/honor",
   getLeaderBoardOverAll: "/leaderboard/rank/overall-score",
-  getLeaderBoardByLanguage: (language) => `/leaderboard/rank/language/${language}`,
+  getLeaderBoardByLanguage: (language) =>
+    `/leaderboard/rank/language/${language}`,
 
   // CODE WAR USER
   deleteCodeWarUser: (username) => `/leaderboard/user/${username}`,

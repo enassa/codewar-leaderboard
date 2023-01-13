@@ -17,7 +17,6 @@ import { svgs } from "./../../../assets/svg/svg";
 import {
   commentsdummyData,
   getLanguageIcon,
-
 } from "../../../constants/app-data";
 import CommentBox from "./CommentBox";
 import NoCommentBox from "./NoCommentBox";
@@ -27,16 +26,19 @@ export default function TableRow({ rowData, position }) {
   const [showAllComment, setShowAllComment] = useState(false);
 
   const getAllLanguages = (languageArr) => {
-    return Array.isArray(languageArr)&&languageArr.map((lang, index) => {
-      return (
-        <div
-          key={index}
-          className="flex mr-2 font-extrabold text-blue-900 bg-blue-100 w-[34px] h-[34px] justify-center items-center rounded-full relative"
-        >
-          {<img alt="" src={getLanguageIcon(lang)} className="h-[20px]" />}
-        </div>
-      );
-    });
+    return (
+      Array.isArray(languageArr) &&
+      languageArr.map((lang, index) => {
+        return (
+          <div
+            key={index}
+            className="flex mr-2 font-extrabold text-blue-900 bg-blue-100 w-[34px] h-[34px] justify-center items-center rounded-full relative"
+          >
+            {<img alt="" src={getLanguageIcon(lang)} className="h-[20px]" />}
+          </div>
+        );
+      })
+    );
   };
   const inputRef = React.createRef();
   const changeAccordionToShow = (accordion) => {
@@ -66,6 +68,9 @@ export default function TableRow({ rowData, position }) {
         </td>
         <td>
           <div className="flex">{rowData.username}</div>
+        </td>
+        <td>
+          <div className="flex">{rowData.name}</div>
         </td>
         <td>
           <div className="flex w-[60px] fill-red-500  relative items-center text-yellow-900  justify-center">
@@ -172,7 +177,7 @@ export default function TableRow({ rowData, position }) {
                   <div className="w-[80%] bg-blue-200 h-[60px] rounded-full mr-5 overflow-hidden py-[10px] pb-[13px] ">
                     <input
                       ref={inputRef}
-                      className="w-full text-3xl text-blue-900 h-full p-3 py-3 px-4 border-0 bg-transparent outline-none"
+                      className="w-full bg-blue-200 text-3xl text-blue-900 h-full p-3 py-3 px-4 border-0 bg-transparent outline-none"
                     />
                   </div>
                   <div className="flex  text-white bg-blue-600 w-[60px] min-w-[60px] h-[60px] justify-center items-center rounded-full relative cursor-pointer">

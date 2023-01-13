@@ -14,6 +14,7 @@ export const SideBarData = [
     route: ROUTES.leaderboard.route,
     icon: <Dashboard />,
     group: 1,
+    text: "leaderboard",
   },
   {
     title: "Accounts",
@@ -21,6 +22,7 @@ export const SideBarData = [
     route: ROUTES.accounts.route,
     icon: <AccountBox />,
     group: 1,
+    text: "accounts",
   },
   {
     title: "Logout",

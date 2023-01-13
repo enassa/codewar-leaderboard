@@ -9,6 +9,7 @@ import {
   changeUserFormState,
   setLanguages,
 } from "./boarddata-slice";
+import { errorToast, successToast } from "../../components/toast/toastify";
 
 export const useBoardService = () => {
   const boardList = useSelector((state) => state?.boardDataSlice?.boardList);
@@ -77,21 +78,31 @@ export const useBoardService = () => {
     return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard, data)
       .then(async (response) => {
         console.log(response);
-        // return response?.data;
+        if (response.status === 404) {
+          errorToast("User not found");
+          return;
+        }
+
+        if (response.status === 409) {
+          errorToast("User already exist");
+          return;
+        } else {
+          successToast("User has been  added");
+          dispatch(changeUserFormState(false));
+          getUsersByHonor();
+        }
       })
-      .then(async (response) => {
-        // console.log(response);
-        // if (!Array.isArray(response)) return;
-        // dispatch(addUsersToBoard(response));
+
+      .catch((error) => {
+        errorToast("?Uknown error, please check your internet connection");
       })
-      .catch((error) => {})
       .finally(() => {
         setLoading(false);
       });
   };
   const addComment = async (data) => {
     setLoading(true);
-    return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard, data)
+    return API.POST_WITH_TOKEN(END_POINTS.addComment, data)
       .then(async (response) => {
         console.log(response);
         // return response?.data;

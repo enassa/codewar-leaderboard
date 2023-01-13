@@ -13,16 +13,17 @@ import LeaderBoard from "./pages/leaderbaord/LeaderBoard";
 import Accounts from "./pages/accounts/Accounts";
 import Auth from "./pages/auth/Auth";
 
-export const API = new API_HANDLER("http://127.0.0.1:8080");
+export const API = new API_HANDLER("http://3.20.164.31:8080");
 function App() {
   return (
     <Router>
       <ToastContainer />
       <Routes>
         {/*====== Non Protected routes ====== */}
-        <Route path={ROUTES.login.route} element={<Auth />} />
-        <Route path={ROUTES.register.route} element={<Auth />} />
-        <Route path={ROUTES.auth.route} element={<Auth />} />
+        <Route path={ROUTES.base.route} element={<Login />} />
+        <Route path={ROUTES.login.route} element={<Login />} />
+        <Route path={ROUTES.register.route} element={<Register />} />
+        {/* <Route path={ROUTES.auth.route} element={<Auth />} /> */}
 
         {/*====== Protected routes ======  */}
         <Route element={<ProtectedRoutes />}>

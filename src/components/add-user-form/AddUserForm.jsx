@@ -22,7 +22,7 @@ export default function AddUserForm() {
           viewAddUserForm ? "border-l-white border-l-4" : ""
         } `}
       >
-        {location.pathname === ROUTES.leaderboard.url && (
+        {/* {location.pathname === ROUTES.leaderboard.url && (
           <>
             <div
               className={`${
@@ -61,7 +61,7 @@ export default function AddUserForm() {
               <Add />
             </div>
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
