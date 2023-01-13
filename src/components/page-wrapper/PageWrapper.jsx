@@ -5,11 +5,17 @@ import Modal from "./../modal/Modal";
 import PopOverForm from "./../../pages/pop-overs/PopOverForm";
 import AddUserForm from "./../add-user-form/AddUserForm";
 import { BoardProvider } from "../../pages/leaderbaord/board-context";
+import { ThemeProvider, useThemeManager } from "./../theme/theme";
 
 export default function TPageWrapper({ children }) {
+  const { isDark, changeTheme } = useThemeManager();
   return (
     <BoardProvider>
-      <div className="flex w-full h-full max-w-full justify-center  bg-white px-[10px]">
+      <div
+        className={`${
+          isDark ? "bg-[#222222] " : "bg-white"
+        } flex w-full h-full max-w-full justify-center  px-[10px]`}
+      >
         <Modal />
         <PopOverForm />
         <div className="w-[10px] bg-blue-800 fixed left-0 h-full top-0"></div>

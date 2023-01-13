@@ -25,17 +25,15 @@ export default function LeaderBoard() {
   useEffect(() => {
     getUsersByHonor();
   }, []);
+  const tableData = boardList;
   const [rowsToDisplay, setRowsToDisplay] = useState(5);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const calcNumOfPages = Math.ceil(usersDummyData.length / rowsToDisplay);
+  const calcNumOfPages = Math.ceil(tableData.length / rowsToDisplay);
   const numberOfPages = calcNumOfPages ? calcNumOfPages : 1;
-
-  const tableData = boardList;
+  const displayFrom = currentPageNumber * rowsToDisplay - rowsToDisplay;
+  const displayTo = currentPageNumber * rowsToDisplay;
   const paginatedData = () => {
-    return tableData.slice(
-      currentPageNumber * rowsToDisplay - rowsToDisplay,
-      currentPageNumber * rowsToDisplay
-    );
+    return tableData.slice(displayFrom, displayTo);
   };
   const increasePageNumber = () => {
     if (currentPageNumber < numberOfPages) {
@@ -162,11 +160,7 @@ export default function LeaderBoard() {
 
         <div className="flex justify-center items-center">
           <span className="mr-2">
-            {currentPageNumber === 1 ? 1 : currentPageNumber + rowsToDisplay} -{" "}
-            {rowsToDisplay * currentPageNumber > tableData?.length
-              ? tableData?.length
-              : rowsToDisplay * currentPageNumber}{" "}
-            of {tableData?.length}
+            {displayFrom} - {displayTo} of {tableData?.length}
           </span>
           <span className="ml-2">
             <ChevronLeft

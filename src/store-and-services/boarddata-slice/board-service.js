@@ -15,7 +15,7 @@ export const useBoardService = () => {
 
   const getUsersByHonor = async (data) => {
     setLoading(true);
-    return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByHonor, data)
+    return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByHonor)
       .then(async (response) => {
         return response?.data;
       })

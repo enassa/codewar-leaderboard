@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SideBarData as defaultMenuList } from "./side-bar-data/side-bar-data";
 import { images } from "./../../../assets/images/images";
 import { useAuthService } from "../../../store-and-services/auth-slice/auth-service";
+import { useTheme } from "@emotion/react";
 
 export default function TSideBar({ menuItems = [] }) {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const { logOut, userData } = useAuthService();
   // ================ get active route from url ================

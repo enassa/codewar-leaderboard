@@ -6,14 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./store-and-services/store";
 import { ModalProvider } from "./components/modal/modal-context";
+import { ThemeProvider } from "./components/theme/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <ModalProvider>
-      <App />
-    </ModalProvider>
+    <ThemeProvider>
+      <ModalProvider>
+        <App />
+      </ModalProvider>
+    </ThemeProvider>
   </Provider>
   // </React.StrictMode>
 );
