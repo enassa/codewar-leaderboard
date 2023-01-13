@@ -117,9 +117,9 @@ export default function LeaderBoard() {
                 changeBoardType("honor");
               }}
               className={`${
-                boardType === "honor"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-white bg-transparent"
+                boardType === "rank" || boardType === "language"
+                  ? "text-white bg-transparent"
+                  : "bg-blue-50 text-blue-600"
               } h-full w-[50%]   rounded-md flex justify-center items-center cursor-pointer `}
             >
               Honor
