@@ -1,17 +1,34 @@
-import { BusinessCenter, Send } from "@mui/icons-material";
+import {
+  AccountCircle,
+  AddCircle,
+  BusinessCenter,
+  Send,
+} from "@mui/icons-material";
 import React from "react";
 import SlimLoader from "./../slim-loader/SlimLoader";
 import CloseButton from "./../close-button/CloseButton";
 import TFormValidator from "./../form-validator/FormValidator";
 import TAuthInput from "./../auth-input/AuthInput";
 import TButton from "../button/Button";
+import { useBoardService } from "./../../store-and-services/boarddata-slice/board-service";
 
-export default function CreatePortfolio({ message }) {
-  const closePopUpForm = () => {};
-  const handleSubmit = (data) => {};
+export default function CreateUserForm({ message }) {
+  const { toggleUserFormState, userFormState, loadingBoard, addUserToBoard } =
+    useBoardService();
+
+  const closePopUpForm = () => {
+    toggleUserFormState(false);
+  };
+  const handleSubmit = (data) => {
+    if (data?.username === undefined) return;
+    if (!!data) {
+      addUserToBoard(data);
+      console.log(data);
+    }
+  };
 
   const validationSchema = {
-    portfolio: {
+    username: {
       required: true,
       maxCharLength: 30,
     },
@@ -27,7 +44,7 @@ export default function CreatePortfolio({ message }) {
           className={`w-[480px]  h-[300px] animate-rise   bg-white shadow-md rounded-md relative  flex justify-start flex-col  pointer-events-none  overflow-hidden`}
         >
           <span className="w-full h-[5px] flex items-start">
-            {true && <SlimLoader />}
+            {loadingBoard && <SlimLoader className="h-[5px]" />}
           </span>
           <div className="w-full h-full  flex justify-start flex-col p-[20px]">
             <div className="w-full h-full flex justify-center items-center text-xl pointer-events-none relative">
@@ -45,27 +62,25 @@ export default function CreatePortfolio({ message }) {
                   return (
                     <div className="w-full h-full flex items-center">
                       <TAuthInput
-                        leftIcon={<BusinessCenter />}
-                        label="Portfolio Name*"
+                        leftIcon={<AccountCircle />}
+                        label="User Name*"
                         required={true}
                         type="text"
-                        name="portfolio"
+                        name="username"
                         className="shadow-neuroInsert border-0  pointer-events-auto"
                       />
                       <div className="w-full flex justify-end right-[15px] ">
                         <TButton
                           styles={{
-                            backgroundColor: `${
-                              true ? "#38506494" : "#385064"
-                            }`,
+                            backgroundColor: `${true ? "#3B82F6" : "#385064"}`,
                           }}
-                          icon={<Send />}
+                          icon={<AddCircle />}
                           onClick={(e) => {
                             e.preventDefault();
                           }}
-                          className="w-[150px] border-0 mt-[15px] pointer-events-auto animate-rise"
+                          className="w-[90px] border-0 mt-[15px] pointer-events-auto animate-rise"
                         >
-                          Create
+                          Add
                         </TButton>
                       </div>
                     </div>

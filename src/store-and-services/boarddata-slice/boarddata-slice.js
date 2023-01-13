@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardList: [],
   languages: [],
+  userFormState: false,
 };
 export const boardDataSlice = createSlice({
   name: "boardData_SLICE",
@@ -25,6 +26,9 @@ export const boardDataSlice = createSlice({
     setLanguages: (state, { payload }) => {
       state.languages = payload;
     },
+    changeUserFormState: (state, { payload }) => {
+      state.userFormState = payload;
+    },
   },
 });
 export const {
@@ -35,5 +39,6 @@ export const {
   addCommentToUser,
   deleteCommentFromUser,
   setLanguages,
+  changeUserFormState,
 } = boardDataSlice.actions;
 export default boardDataSlice.reducer;

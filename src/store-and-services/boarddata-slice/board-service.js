@@ -4,11 +4,18 @@ import { useEffect, useState } from "react";
 
 import { END_POINTS } from "./../../constants/urls";
 import { API } from "../../App";
-import { addUsersToBoard, setLanguages } from "./boarddata-slice";
+import {
+  addUsersToBoard,
+  changeUserFormState,
+  setLanguages,
+} from "./boarddata-slice";
 
 export const useBoardService = () => {
   const boardList = useSelector((state) => state?.boardDataSlice?.boardList);
   const languages = useSelector((state) => state?.boardDataSlice?.languages);
+  const userFormState = useSelector(
+    (state) => state?.boardDataSlice?.userFormState
+  );
   const dispatch = useDispatch();
 
   const [loadingBoard, setLoading] = useState(false);
@@ -20,7 +27,6 @@ export const useBoardService = () => {
         return response?.data;
       })
       .then(async (response) => {
-        console.log(response);
         if (!Array.isArray(response)) return;
         dispatch(addUsersToBoard(response));
       })
@@ -52,7 +58,7 @@ export const useBoardService = () => {
     setLoading(true);
     return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByLanguage(data))
       .then(async (response) => {
-        console.log(response)
+        console.log(response);
         return response?.data;
       })
       .then(async (response) => {
@@ -68,9 +74,9 @@ export const useBoardService = () => {
 
   const addUserToBoard = async (data) => {
     setLoading(true);
-    return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard(), data)
+    return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard, data)
       .then(async (response) => {
-        console.log(response)
+        console.log(response);
         // return response?.data;
       })
       .then(async (response) => {
@@ -83,12 +89,36 @@ export const useBoardService = () => {
         setLoading(false);
       });
   };
-  
+  const addComment = async (data) => {
+    setLoading(true);
+    return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard, data)
+      .then(async (response) => {
+        console.log(response);
+        // return response?.data;
+      })
+      .then(async (response) => {
+        // console.log(response);
+        // if (!Array.isArray(response)) return;
+        // dispatch(addUsersToBoard(response));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const toggleUserFormState = (boardState) => {
+    dispatch(changeUserFormState(boardState));
+  };
   return {
     getUsersByHonor,
     getUsersByOverall,
     getUsersByLanguage,
     boardList,
     loadingBoard,
+    userFormState,
+    toggleUserFormState,
+    addUserToBoard,
+    addComment,
   };
 };

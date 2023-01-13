@@ -80,7 +80,8 @@ export default function TFormValidator({
     listenForSubmit !== 0 &&
       !isSubmitting &&
       !errorState &&
-      onSubmit(states.values);
+      console.log("hello");
+    onSubmit(states.values);
   }, [listenForSubmit]);
 
   const processButton = (buttons) => {

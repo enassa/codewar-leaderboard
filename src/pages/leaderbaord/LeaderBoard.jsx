@@ -6,7 +6,9 @@ import { languages, getLanguageIcon } from "./../../constants/app-data";
 import { useBoardService } from "./../../store-and-services/boarddata-slice/board-service";
 import SlimLoader from "./../../components/slim-loader/SlimLoader";
 
+import { useUserService } from "./../../components/add-user-form/add-user-context";
 import {
+  Add,
   ChevronLeft,
   ChevronRight,
   IntegrationInstructions,
@@ -20,6 +22,7 @@ export default function LeaderBoard() {
     getUsersByLanguage,
     boardList,
     loadingBoard,
+    toggleUserFormState
   } = useBoardService();
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function LeaderBoard() {
   };
   const ejectTableHeades = () => {
     return headers.map((data, index) => {
-      if(boardType === "language" && data === "Language") return
+      if (boardType === "language" && data === "Language") return;
       const headerStyle =
         data === "Language" || data === "Actions" ? "justify-center" : "";
 
@@ -113,7 +116,7 @@ export default function LeaderBoard() {
       {/* Table Control section */}
       <div className="w-full h-[60px] flex items-center justify-between ">
         <div className="flex items-center ">
-          <div className="w-[200px] bg-blue-400 h-[30px] rounded-md p-1 flex justify-center items-center mr-[10px]">
+          <div className="w-[200px] bg-blue-400 h-[35px] rounded-md p-1 flex justify-center items-center mr-[10px] mt-[10px]">
             <div
               onClick={() => {
                 changeBoardType("honor");
@@ -122,7 +125,7 @@ export default function LeaderBoard() {
                 boardType === "rank" || boardType === "language"
                   ? "text-white bg-transparent"
                   : "bg-blue-50 text-blue-600"
-              } h-full w-[50%]   rounded-md flex justify-center items-center cursor-pointer `}
+              } h-full w-[50%]   rounded-sm flex justify-center items-center cursor-pointer `}
             >
               Honor
             </div>
@@ -131,17 +134,17 @@ export default function LeaderBoard() {
                 changeBoardType("rank");
               }}
               className={`${
-                boardType === "rank"
+                boardType === "rank" || boardType === "language"
                   ? "bg-blue-50 text-blue-600"
                   : "text-white bg-transparent"
-              } h-full w-[50%] rounded-md  flex justify-center items-center cursor-pointer `}
+              } h-full w-[50%] rounded-sm  flex justify-center items-center cursor-pointer `}
             >
               Rank
             </div>
           </div>
           <div className="h-[60px] flex z-[3]">
             {boardType === "rank" || boardType === "language" ? (
-              <div className="h-full flex items-center animate-rise mb-[10px]">
+              <div className="h-full flex items-center animate-rise mb-[30px]">
                 <ComboInput
                   placeholder="Select Language"
                   label=""
@@ -161,6 +164,17 @@ export default function LeaderBoard() {
         </div>
 
         <div className="flex justify-center items-center">
+          <div className="w-[110px] p-[2px] bg-white shadow-md h-[40px] rounded-md flex justify-center items-center mr-[20px]">
+            <button
+              onClick={() => {
+                toggleUserFormState(true);
+              }}
+              className={` h-full w-full rounded-md  flex justify-center items-center cursor-pointer bg-blue-500  text-white px-1`}
+            >
+              <Add />
+              <span>Add User</span>
+            </button>
+          </div>
           <span className="mr-2">
             {displayFrom} - {displayTo} of {tableData?.length}
           </span>
