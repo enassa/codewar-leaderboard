@@ -117,6 +117,7 @@ export default function ComboInput({
           onFocusCapture={(e) => {
             e.stopPropagation();
             inputRef.current.select();
+            setSearchValue("");
             !disabled && setDropOptions(true);
           }}
           onClick={(e) => {
