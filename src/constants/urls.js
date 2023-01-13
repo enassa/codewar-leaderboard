@@ -4,16 +4,16 @@ export const END_POINTS = {
   register: "/auth/signup",
 
   // LEADER BOARD
-  addUserToLearderBoard: "/leaderboard",
-  getLeaderBoardByHonor: (honor) => `/leaderboard/${honor}`,
-  getLeaderBoardByRank: (rank) => `/leaderboard/${rank}`,
-  getLeaderBoardByLanguage: (rank, language) =>
-    `/leaderboard/${rank}/${language}`,
+  addUserToLearderBoard: "/leaderboard/user/add",
+  getCodeWarUserProfile: (username) => `/leaderboard/user/find/${username}`,
+  getLeaderBoardByHonor: "/leaderboard/rank/honor",
+  getLeaderBoardOverAll: "/leaderboard/rank/overall-score",
+  getLeaderBoardByLanguage: (language) => `/leaderboard/rank/${language}`,
 
   // CODE WAR USER
-  deleteCodeWarUser: (username) => `/leaderboard/${username}`,
+  deleteCodeWarUser: (username) => `/leaderboard/user/${username}`,
   getCodeWarUserInfo: "/user",
-  addComment: "comment/add",
+  addComment: "leaderboard/comment/add",
 
   // OTHERS
   getAllLanguages: "/language",

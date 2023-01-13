@@ -26,8 +26,8 @@ export default function TableRow({ rowData, position }) {
   const [accordionToShow, setAccordionToShow] = useState("");
   const [showAllComment, setShowAllComment] = useState(false);
 
-  const getAllLanguages = () => {
-    return languages.map((lang, index) => {
+  const getAllLanguages = (languageArr) => {
+    return languageArr.map((lang, index) => {
       return (
         <div
           key={index}
@@ -61,17 +61,17 @@ export default function TableRow({ rowData, position }) {
       <tr className="w-full h-[60px] mb-1">
         <td>
           <div className="flex text-3xl font-extrabold text-blue-900 bg-blue-200 w-[44px] h-[44px] justify-center items-center rounded-full">
-            {rowData?.name?.charAt(0)}
+            {rowData.username.charAt(0)}
           </div>
         </td>
         <td>
-          <div className="flex">{rowData?.name}</div>
+          <div className="flex">{rowData.username}</div>
         </td>
         <td>
           <div className="flex w-[60px] fill-red-500  relative items-center text-yellow-900  justify-center">
             {svgs.Hexagon}
             <span className="absolute font-bold top-[15px] left-[14px]">
-              5kyu
+              {rowData?.rank}
             </span>
           </div>
         </td>
@@ -79,12 +79,16 @@ export default function TableRow({ rowData, position }) {
           <div className="flex">{rowData?.clan}</div>
         </td>
         <td className="flex justify-center">
-          <div className="flex  overflow-x-hidden overflow-y-hidden max-w-[300px] h-[70px] items-center">
-            <THorizontalBar>{getAllLanguages()}</THorizontalBar>
+          <div className="flex  overflow-x-hidden overflow-y-hidden  max-w-[200px] h-[70px] items-center">
+            <THorizontalBar>
+              {getAllLanguages(rowData?.languages)}
+            </THorizontalBar>
           </div>
         </td>
         <td>
-          <div className="flex">{rowData.honor}</div>
+          <div className="flex">
+            {rowData?.honor !== undefined ? rowData?.honor : rowData?.score}
+          </div>
         </td>
         <td>
           <div className="flex font-extrabold text-blue-900 bg-blue-100 w-[44px] min-w-[44px] h-[44px] justify-center items-center rounded-full relative">

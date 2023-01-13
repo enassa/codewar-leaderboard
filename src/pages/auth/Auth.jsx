@@ -6,6 +6,7 @@ import "./login/login.css";
 
 export default function Auth() {
   const [visibleForm, setVisibleForm] = useState({
+    onOpenRemoveSignUpForm: true,
     loginForm: true,
     registerForm: false,
   });
@@ -19,6 +20,7 @@ export default function Auth() {
       }
       return {
         ...prevForm,
+        ["onOpenRemoveSignUpForm"] : false
       };
     });
   }
@@ -28,6 +30,7 @@ export default function Auth() {
       <div className="dark_overlay"></div>
       <Register
         show={visibleForm.registerForm}
+        showOnOpen={visibleForm.onOpenRemoveSignUpForm}
         toggleVisibleForm={toggleVisibleForm}
       />
       <Login

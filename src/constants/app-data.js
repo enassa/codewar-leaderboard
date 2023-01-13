@@ -1,4 +1,14 @@
 import { images } from "./../assets/images/images";
+export const headers = [
+  "Profile",
+  "User Name",
+  "Rank",
+  "Clan",
+  "Language",
+  "Honor",
+  "Position",
+  "Actions",
+];
 export const commentsdummyData = [
   {
     email: "assanics@gmail.com",
@@ -417,19 +427,23 @@ export const usersDummyData = [
   },
 ];
 export const languages = [
-  "javascript",
-  "c++",
-  "csharp",
-  "typescript",
   "python",
-  "sql",
+  "cpp",
+  "java",
+  "elixir",
+  "scala",
+  "kotlin",
+  "php",
+  "typescript",
+  "javascript",
+  "ruby",
 ];
 
 export const getLanguageIcon = (language) => {
   switch (language) {
     case "javascript":
       return images.javaScript;
-    case "c++":
+    case "cpp":
       return images.cPlusPlus;
     case "typescript":
       return images.typeScript;
@@ -437,12 +451,18 @@ export const getLanguageIcon = (language) => {
       return images.java;
     case "python":
       return images.python;
-    case "sql":
+    case "kotlin":
       return images.kotlin;
-    case "sql-server":
-      return images.sqlServe;
+    case "ruby":
+      return images?.ruby;
     case "csharp":
       return images.cSharp;
+    case "php":
+      return images?.php;
+    case "scala":
+      return images.scala;
+    case "elixir":
+      return images?.elixir;
     default:
       break;
   }
