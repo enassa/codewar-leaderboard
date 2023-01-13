@@ -1,47 +1,38 @@
-import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../modal/modal-context";
+import {
+  addUserToStore,
+  closePortForm,
+  getUsers,
+  openPortForm,
+} from "./user-slice";
 
-const AddUserContext = React.createContext();
-export const AddUserProvider = ({ children }) => {
-  const [viewAddUser, setViewAddUser] = useState(true);
 
-  const [addUserState, setAddUserState] = useState({
-    state: false,
-    message: undefined,
-    response: undefined,
-    callBack: () => {
-      console.log("addUser response");
-    },
-  });
-  const showAddUser = (message, callBack) => {
-    setViewAddUser(true);
-    setAddUserState({
-      state: true,
-      message: message,
-      callBack,
-    });
-  };
-  const closeAddUser = (response) => {
-    addUserState.callBack(response);
-    setViewAddUser(false);
-    setAddUserState({
-      state: false,
-      message: undefined,
-      response: response,
-    });
-  };
-  return (
-    <AddUserContext.Provider
-      value={{
-        addUserState,
-        showAddUser,
-        closeAddUser,
-        setViewAddUser,
-        viewAddUser,
-      }}
-    >
-      {children}
-    </AddUserContext.Provider>
+export const useUserService = () => {
+  const dispatch = useDispatch();
+  const [loadingUser, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState("User list");
+  const users = useSelector((state) => state?.userSlice?.users);
+  const userFormState = useSelector(
+    (state) => state?.userSlice?.userFormState
   );
+  const { showModal } = useModal();
+  const processFailedRequest = () => {};
+
+  const closeUserForm = () => {
+    dispatch(closePortForm());
+  };
+
+  const openUserForm = () => {
+    dispatch(openPortForm());
+  };
+
+  const closeUser = () => {
+    showModal("Do you really want to close this user?", (response) => {});
+  };
+
+  return {
+
+  };
 };
-export const useAddUser = () => React.useContext(AddUserContext);

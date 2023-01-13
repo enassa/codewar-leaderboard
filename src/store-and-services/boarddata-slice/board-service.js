@@ -52,6 +52,7 @@ export const useBoardService = () => {
     setLoading(true);
     return API.GET_WITH_TOKEN(END_POINTS.getLeaderBoardByLanguage(data))
       .then(async (response) => {
+        console.log(response)
         return response?.data;
       })
       .then(async (response) => {
@@ -65,6 +66,24 @@ export const useBoardService = () => {
       });
   };
 
+  const addUserToBoard = async (data) => {
+    setLoading(true);
+    return API.POST_WITH_TOKEN(END_POINTS.addUserToLearderBoard(), data)
+      .then(async (response) => {
+        console.log(response)
+        // return response?.data;
+      })
+      .then(async (response) => {
+        // console.log(response);
+        // if (!Array.isArray(response)) return;
+        // dispatch(addUsersToBoard(response));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  
   return {
     getUsersByHonor,
     getUsersByOverall,

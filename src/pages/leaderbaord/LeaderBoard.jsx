@@ -52,8 +52,10 @@ export default function LeaderBoard() {
   };
   const ejectTableHeades = () => {
     return headers.map((data, index) => {
+      if(boardType === "language" && data === "Language") return
       const headerStyle =
         data === "Language" || data === "Actions" ? "justify-center" : "";
+
       const getHeader = (header) => {
         if (boardType === "rank") {
           return header === "Honor" ? "Scores" : data;

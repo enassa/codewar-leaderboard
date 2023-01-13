@@ -17,7 +17,7 @@ import { svgs } from "./../../../assets/svg/svg";
 import {
   commentsdummyData,
   getLanguageIcon,
-  languages,
+
 } from "../../../constants/app-data";
 import CommentBox from "./CommentBox";
 import NoCommentBox from "./NoCommentBox";
@@ -27,7 +27,7 @@ export default function TableRow({ rowData, position }) {
   const [showAllComment, setShowAllComment] = useState(false);
 
   const getAllLanguages = (languageArr) => {
-    return languageArr.map((lang, index) => {
+    return Array.isArray(languageArr)&&languageArr.map((lang, index) => {
       return (
         <div
           key={index}

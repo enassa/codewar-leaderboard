@@ -13,7 +13,7 @@ import LeaderBoard from "./pages/leaderbaord/LeaderBoard";
 import Accounts from "./pages/accounts/Accounts";
 import Auth from "./pages/auth/Auth";
 
-export const API = new API_HANDLER("http://3.20.164.31:8080");
+export const API = new API_HANDLER("http://127.0.0.1:8080");
 function App() {
   return (
     <Router>
@@ -31,7 +31,7 @@ function App() {
         </Route>
 
         {/* ====== Non existant route ====== */}
-        <Route path={ROUTES.notFound} element={<ErrorPage />} />
+        <Route path={ROUTES.notFound} element={<Auth />} />
       </Routes>
     </Router>
   );
