@@ -20,11 +20,13 @@ import {
 } from "../../../constants/app-data";
 import CommentBox from "./CommentBox";
 import NoCommentBox from "./NoCommentBox";
+import { useBoardService } from "../../../store-and-services/boarddata-slice/board-service";
+import Loader from "../../../components/loader/Loader";
 
 export default function TableRow({ rowData, position }) {
   const [accordionToShow, setAccordionToShow] = useState("");
   const [showAllComment, setShowAllComment] = useState(false);
-
+  const {deleteUser, loadingBoard} = useBoardService()
   const getAllLanguages = (languageArr) => {
     return (
       Array.isArray(languageArr) &&
@@ -128,10 +130,12 @@ export default function TableRow({ rowData, position }) {
               />
             )}
 
-            <Delete
-              onClick={() => console.log("delete")}
+              {
+                loadingBoard?<Loader/>: <Delete
+              onClick={() => deleteUser(rowData?.username)}
               className="text-red-200 cursor-pointer"
             />
+              }
           </div>
         </td>
       </tr>

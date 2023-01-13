@@ -63,7 +63,6 @@ export const useBoardService = () => {
         return response?.data;
       })
       .then(async (response) => {
-        console.log(response);
         if (!Array.isArray(response)) return;
         dispatch(addUsersToBoard(response));
       })
@@ -117,6 +116,24 @@ export const useBoardService = () => {
         setLoading(false);
       });
   };
+  const deleteUser = async (data) => {
+    setLoading(true);
+    return API.POST_WITH_TOKEN(END_POINTS.deleteCodeWarUser(data.username))
+      .then(async (response) => {
+        console.log(response)
+        // getUsersByHonor();
+        // return response?.data;
+      })
+      .then(async (response) => {
+        // console.log(response);
+        // if (!Array.isArray(response)) return;
+        // dispatch(addUsersToBoard(response));
+      })
+      .catch((error) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const toggleUserFormState = (boardState) => {
     dispatch(changeUserFormState(boardState));
@@ -131,5 +148,6 @@ export const useBoardService = () => {
     toggleUserFormState,
     addUserToBoard,
     addComment,
+    deleteUser
   };
 };

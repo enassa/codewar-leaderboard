@@ -31,15 +31,15 @@ export default function LeaderBoard() {
   const tableData = boardList;
   const [rowsToDisplay, setRowsToDisplay] = useState(5);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const calcNumOfPages = Math.ceil(tableData.length / rowsToDisplay);
-  const numberOfPages = calcNumOfPages ? calcNumOfPages : 1;
+  const calcNumOfPages = () => Math.ceil(tableData.length);
+  const numberOfPages = () =>  calcNumOfPages() ? calcNumOfPages() : 1;
   const displayFrom = currentPageNumber * rowsToDisplay - rowsToDisplay;
-  const displayTo = currentPageNumber * rowsToDisplay;
+  const displayTo = () => (currentPageNumber * rowsToDisplay > numberOfPages()) ? numberOfPages() : currentPageNumber * rowsToDisplay;
   const paginatedData = () => {
-    return tableData.slice(displayFrom, displayTo);
+    return tableData.slice(displayFrom, displayTo());
   };
   const increasePageNumber = () => {
-    if (currentPageNumber < numberOfPages) {
+    if (currentPageNumber <= numberOfPages()/5) {
       setCurrentPageNumber(currentPageNumber + 1);
     }
   };
@@ -78,10 +78,16 @@ export default function LeaderBoard() {
     setBoardType(board);
     switch (board) {
       case "honor":
+        setRowsToDisplay(5);
+        setCurrentPageNumber(1);
         return getUsersByHonor();
       case "rank":
+        setRowsToDisplay(5);
+        setCurrentPageNumber(1);
         return getUsersByOverall();
       case "language":
+        setRowsToDisplay(5);
+        setCurrentPageNumber(1);
         return getUsersByLanguage(language);
       default:
         break;
@@ -150,8 +156,13 @@ export default function LeaderBoard() {
                   name="language"
                   data={getLanguagesObject()}
                   getSelected={(value) => {
-                    changeBoardType("language", value);
-                  }}
+                    if(value === "Overall")
+                    {
+                      changeBoardType("rank");
+                    }
+                    else{
+                      changeBoardType("language", value);
+                  }}}
                   displayProperty={"name"}
                   value={"Overall"}
                   noBorder
@@ -175,7 +186,7 @@ export default function LeaderBoard() {
             </button>
           </div>
           <span className="mr-2">
-            {displayFrom} - {displayTo} of {tableData?.length}
+            {displayFrom} - {displayTo()} of {tableData?.length}
           </span>
           <span className="ml-2">
             <ChevronLeft
