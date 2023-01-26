@@ -82,7 +82,7 @@ export default function TableRow({ rowData, position }) {
             className="flex w-[60px] fill-red-500  relative items-center   justify-center"
           >
             {getRankIcon(rowData?.rank)}
-            <span className="absolute font-bold top-[15px] left-[14px]">
+            <span className="absolute font-bold top-[15px] left-[11px]">
               {rowData?.rank}
             </span>
           </div>
