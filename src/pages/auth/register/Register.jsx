@@ -7,11 +7,13 @@ import { images } from "./../../../assets/images/images";
 
 import { useAuthService } from "../../../store-and-services/auth-slice/auth-service";
 import { useNavigate } from "react-router-dom";
+import { mockMode } from "../../../config/config";
+import Loader from "./../../../components/loader/Loader";
 
 export default function Register(props) {
-  const { registerAsync, loadingAuth, authResponse } = useAuthService();
+  const { registerAsync, loadingAuth, authResponse, registerationMock } =
+    useAuthService();
   const navigate = useNavigate();
-
 
   function handleRegisterData(event) {
     event.preventDefault();
@@ -50,8 +52,7 @@ export default function Register(props) {
       email: registerFormData.registerEmail,
       password: registerFormData.registerPassword,
     };
-
-    registerAsync(data);
+    mockMode ? registerationMock(data) : registerAsync(data);
   }
 
   return (
@@ -157,15 +158,19 @@ export default function Register(props) {
               !confirmPasswordValid
             }
           >
-            {loadingAuth && "Creating Account"}
+            {loadingAuth && (
+              <div className="w-full h-full flex justify-center items-center">
+                {" "}
+                <Loader /> <span className="ml-2">
+                  Creating account...
+                </span>{" "}
+              </div>
+            )}
             {!loadingAuth && "Create an Account"}
           </button>
           <p className="bottom-text">
             Already have an Account?
-            <button
-              className="text_link"
-              onClick={() => navigate('/login')}
-            >
+            <button className="text_link" onClick={() => navigate("/login")}>
               Sign in instead
             </button>
           </p>

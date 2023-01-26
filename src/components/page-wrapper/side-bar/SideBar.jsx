@@ -57,7 +57,7 @@ export default function TSideBar({ menuItems = [] }) {
   };
 
   return (
-    <div className="shadow-neumoNav w-[60px] min-w-[60px] h-full z-10  bg-white flex flex-col ">
+    <div className="shadow-neumoNav w-[60px] min-w-[60px] h-full z-10  bg-xxxx flex flex-col ">
       <div className="w-full justify-center font-exrabold mt-[10px] mb-[20px]">
         {/* <BalanceCard balance={100} /> */}
       </div>

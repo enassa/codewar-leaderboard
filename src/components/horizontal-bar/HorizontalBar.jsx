@@ -31,30 +31,24 @@ export default function THorizontalBar({ children }) {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-[200px] px-[15px]">
       <div
         ref={containerRef}
-        className="flex h-[150px] scrollbar-hidden justify-start items-center overflow-auto w-full px-[20px]  shadow-neumoNav  rounded-[20px] relative"
+        className="flex h-[150px] scrollbar-hidden justify-start items-center overflow-auto w-full bg-transparent px-[10px]  rounded-[20px] relative"
       >
         {children}
       </div>
       <div
         onClick={() => scrollRight()}
-        className="absolute cursor-pointer top-[34%] left-[-10px] w-[40px] h-[40px] rounded-full  flex justify-center items-center"
+        className="absolute hover:text-[#60A5FA] text-[#b1d4ff] cursor-pointer  top-[36%] left-[-13px] w-[40px] h-[40px] rounded-full  flex justify-center items-center"
       >
-        <ArrowLeft
-          style={{ fontSize: 50 }}
-          className="pointer-events-none text-transparent"
-        />
+        <ArrowLeft style={{ fontSize: 50 }} className="pointer-events-none " />
       </div>
       <div
         onClick={() => scrollLeft()}
-        className="absolute cursor-pointer top-[34%] right-[-10px] w-[40px] h-[40px] rounded-full flex justify-center items-center"
+        className="absolute hover:text-[#60A5FA] text-[#b1d4ff] cursor-pointer   top-[36%] right-[-13px] w-[40px] h-[40px] rounded-full flex justify-center items-center"
       >
-        <ArrowRight
-          style={{ fontSize: 50 }}
-          className="pointer-events-none text-transparent"
-        />
+        <ArrowRight style={{ fontSize: 50 }} className="pointer-events-none " />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { useAuthService } from "./../../store-and-services/auth-slice/auth-servi
 
 export function ProtectedRoutes() {
   const { userIsLoggedIn } = useAuthService();
-  return !userIsLoggedIn() ? (
+  return userIsLoggedIn() ? (
     <TPageWrapper>
       <Outlet />
     </TPageWrapper>

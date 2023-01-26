@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { headers, usersDummyData } from "../../constants/app-data";
+import {
+  dummyDataHonor,
+  dummyDataLanguage,
+  dummyDataOverall,
+  headers,
+  usersDummyData,
+} from "../../constants/app-data";
 import TableRow from "./table/TableRow";
 import ComboInput from "./../../components/combo-input-box/ComboInput";
 import { languages, getLanguageIcon } from "./../../constants/app-data";
@@ -7,12 +13,14 @@ import { useBoardService } from "./../../store-and-services/boarddata-slice/boar
 import SlimLoader from "./../../components/slim-loader/SlimLoader";
 
 import { useUserService } from "./../../components/add-user-form/add-user-context";
+import { mockMode } from "./../../config/config";
 import {
   Add,
   ChevronLeft,
   ChevronRight,
   IntegrationInstructions,
 } from "@mui/icons-material";
+import NoCommentBox from "./table/NoCommentBox";
 
 export default function LeaderBoard() {
   const [boardType, setBoardType] = useState("honor");
@@ -23,23 +31,27 @@ export default function LeaderBoard() {
     boardList,
     loadingBoard,
     toggleUserFormState,
+    changeBoardTypeMock,
   } = useBoardService();
 
   useEffect(() => {
-    getUsersByHonor();
+    mockMode ? changeBoardTypeMock(dummyDataHonor) : getUsersByHonor();
   }, []);
   const tableData = boardList;
-  const [rowsToDisplay, setRowsToDisplay] = useState(5);
+  const [rowsToDisplay, setRowsToDisplay] = useState(20);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const calcNumOfPages = () => Math.ceil(tableData.length);
-  const numberOfPages = () =>  calcNumOfPages() ? calcNumOfPages() : 1;
+  const numberOfPages = () => (calcNumOfPages() ? calcNumOfPages() : 1);
   const displayFrom = currentPageNumber * rowsToDisplay - rowsToDisplay;
-  const displayTo = () => (currentPageNumber * rowsToDisplay > numberOfPages()) ? numberOfPages() : currentPageNumber * rowsToDisplay;
+  const displayTo = () =>
+    currentPageNumber * rowsToDisplay > numberOfPages()
+      ? numberOfPages()
+      : currentPageNumber * rowsToDisplay;
   const paginatedData = () => {
     return tableData.slice(displayFrom, displayTo());
   };
   const increasePageNumber = () => {
-    if (currentPageNumber <= numberOfPages()/5) {
+    if (currentPageNumber <= numberOfPages() / 30) {
       setCurrentPageNumber(currentPageNumber + 1);
     }
   };
@@ -78,17 +90,23 @@ export default function LeaderBoard() {
     setBoardType(board);
     switch (board) {
       case "honor":
-        setRowsToDisplay(5);
+        setRowsToDisplay(30);
         setCurrentPageNumber(1);
-        return getUsersByHonor();
+        return mockMode
+          ? changeBoardTypeMock(dummyDataHonor)
+          : getUsersByHonor();
       case "rank":
-        setRowsToDisplay(5);
+        setRowsToDisplay(30);
         setCurrentPageNumber(1);
-        return getUsersByOverall();
+        return mockMode
+          ? changeBoardTypeMock(dummyDataOverall)
+          : getUsersByOverall();
       case "language":
-        setRowsToDisplay(5);
+        setRowsToDisplay(30);
         setCurrentPageNumber(1);
-        return getUsersByLanguage(language);
+        return mockMode
+          ? changeBoardTypeMock(dummyDataLanguage)
+          : getUsersByLanguage(language);
       default:
         break;
     }
@@ -147,7 +165,7 @@ export default function LeaderBoard() {
               Rank
             </div>
           </div>
-          <div className="h-[60px] flex z-[3]">
+          <div className="h-[60px] flex z-[6]">
             {boardType === "rank" || boardType === "language" ? (
               <div className="h-full flex items-center animate-rise mb-[30px]">
                 <ComboInput
@@ -156,13 +174,12 @@ export default function LeaderBoard() {
                   name="language"
                   data={getLanguagesObject()}
                   getSelected={(value) => {
-                    if(value === "Overall")
-                    {
+                    if (value === "Overall") {
                       changeBoardType("rank");
-                    }
-                    else{
+                    } else {
                       changeBoardType("language", value);
-                  }}}
+                    }
+                  }}
                   displayProperty={"name"}
                   value={"Overall"}
                   noBorder
@@ -174,7 +191,7 @@ export default function LeaderBoard() {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="w-[110px] p-[2px] bg-white shadow-md h-[40px] rounded-md flex justify-center items-center mr-[20px]">
+          <div className="w-[110px] p-[2px] bg-xxxx shadow-md h-[40px] rounded-md flex justify-center items-center mr-[20px]">
             <button
               onClick={() => {
                 toggleUserFormState(true);
@@ -207,9 +224,14 @@ export default function LeaderBoard() {
 
       {/* Table Entry Point */}
       <div className="w-full h-full bg-[#F8FAFF] overflow-auto overflow-x-hidden px-3 relative">
-        <div className="w-full h-full">
+        {tableData.length === 0 && (
+          <div className="w-full h-full  flex justify-center items-center absolute top-0 left-0">
+            <NoCommentBox message="No users" />
+          </div>
+        )}
+        <div className="w-full h-full ">
           <table className="w-full ">
-            <thead className="sticky shadow-sm top-0 bg-[#F8FAFF] z-[2] h-[60px] mb-[20px] border-b-2 border-b-gray-200 overflow-x-hidden">
+            <thead className="sticky shadow-sm top-0 bg-[#F8FAFF] z-[3] h-[60px] mb-[20px] border-b-2 border-b-gray-200 overflow-x-hidden">
               <div className="w-full h-[5px] absolute  ">
                 {loadingBoard && <SlimLoader />}
               </div>
@@ -223,3 +245,4 @@ export default function LeaderBoard() {
     </div>
   );
 }
+// bg-[#F8FAFF]

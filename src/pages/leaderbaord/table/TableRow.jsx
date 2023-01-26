@@ -17,6 +17,8 @@ import { svgs } from "./../../../assets/svg/svg";
 import {
   commentsdummyData,
   getLanguageIcon,
+  getRankColor,
+  getRankIcon,
 } from "../../../constants/app-data";
 import CommentBox from "./CommentBox";
 import NoCommentBox from "./NoCommentBox";
@@ -26,7 +28,7 @@ import Loader from "../../../components/loader/Loader";
 export default function TableRow({ rowData, position }) {
   const [accordionToShow, setAccordionToShow] = useState("");
   const [showAllComment, setShowAllComment] = useState(false);
-  const {deleteUser, loadingBoard} = useBoardService()
+  const { deleteUser, loadingBoard } = useBoardService();
   const getAllLanguages = (languageArr) => {
     return (
       Array.isArray(languageArr) &&
@@ -34,7 +36,7 @@ export default function TableRow({ rowData, position }) {
         return (
           <div
             key={index}
-            className="flex mr-2 font-extrabold text-blue-900 bg-blue-100 w-[34px] h-[34px] justify-center items-center rounded-full relative"
+            className="flex mr-2 font-extrabold text-blue-900 bg-blue-100 w-[34px] h-[34px] min-w-[34px] min-h-[34px] justify-center items-center rounded-full relative"
           >
             {<img alt="" src={getLanguageIcon(lang)} className="h-[20px]" />}
           </div>
@@ -75,8 +77,11 @@ export default function TableRow({ rowData, position }) {
           <div className="flex">{rowData.name}</div>
         </td>
         <td>
-          <div className="flex w-[60px] fill-red-500  relative items-center text-yellow-900  justify-center">
-            {svgs.Hexagon}
+          <div
+            style={{ color: getRankColor(rowData?.rank) }}
+            className="flex w-[60px] fill-red-500  relative items-center   justify-center"
+          >
+            {getRankIcon(rowData?.rank)}
             <span className="absolute font-bold top-[15px] left-[14px]">
               {rowData?.rank}
             </span>
@@ -85,13 +90,15 @@ export default function TableRow({ rowData, position }) {
         <td>
           <div className="flex">{rowData?.clan}</div>
         </td>
-        <td className="flex justify-center">
-          <div className="flex  overflow-x-hidden overflow-y-hidden  max-w-[200px] h-[70px] items-center">
-            <THorizontalBar>
-              {getAllLanguages(rowData?.languages)}
-            </THorizontalBar>
-          </div>
-        </td>
+        {!!rowData?.languages && (
+          <td className="flex justify-center">
+            <div className="flex  overflow-x-hidden overflow-y-hidden  max-w-[200px] h-[70px] items-center">
+              <THorizontalBar>
+                {getAllLanguages(rowData?.languages)}
+              </THorizontalBar>
+            </div>
+          </td>
+        )}
         <td>
           <div className="flex">
             {rowData?.honor !== undefined ? rowData?.honor : rowData?.score}
@@ -130,12 +137,14 @@ export default function TableRow({ rowData, position }) {
               />
             )}
 
-              {
-                loadingBoard?<Loader/>: <Delete
-              onClick={() => deleteUser(rowData?.username)}
-              className="text-red-200 cursor-pointer"
-            />
-              }
+            {loadingBoard ? (
+              <Loader />
+            ) : (
+              <Delete
+                onClick={() => deleteUser(rowData?.username)}
+                className="text-red-200 cursor-pointer"
+              />
+            )}
           </div>
         </td>
       </tr>

@@ -120,7 +120,7 @@ export const useBoardService = () => {
     setLoading(true);
     return API.POST_WITH_TOKEN(END_POINTS.deleteCodeWarUser(data.username))
       .then(async (response) => {
-        console.log(response)
+        console.log(response);
         // getUsersByHonor();
         // return response?.data;
       })
@@ -138,6 +138,15 @@ export const useBoardService = () => {
   const toggleUserFormState = (boardState) => {
     dispatch(changeUserFormState(boardState));
   };
+
+  const changeBoardTypeMock = (data) => {
+    console.log(data.length);
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(addUsersToBoard(data));
+      setLoading(false);
+    }, 3000);
+  };
   return {
     getUsersByHonor,
     getUsersByOverall,
@@ -148,6 +157,7 @@ export const useBoardService = () => {
     toggleUserFormState,
     addUserToBoard,
     addComment,
-    deleteUser
+    deleteUser,
+    changeBoardTypeMock,
   };
 };

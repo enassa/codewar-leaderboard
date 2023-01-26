@@ -7,10 +7,11 @@ import { images } from "./../../../assets/images/images";
 
 import { useAuthService } from "../../../store-and-services/auth-slice/auth-service";
 import { useNavigate } from "react-router-dom";
+import { mockMode } from "./../../../config/config";
+import Loader from "../../../components/loader/Loader";
 
 export default function Login(props) {
-  const { loginAsync, loadingAuth, authResponse, userIsLoggedIn } =
-    useAuthService();
+  const { loginAsync, loadingAuth, authResponse, loginMock } = useAuthService();
   const navigate = useNavigate();
 
   const [loginFormData, setLoginFormData] = useState({
@@ -38,7 +39,7 @@ export default function Login(props) {
       email: loginFormData.loginEmail,
       password: loginFormData.loginPassword,
     };
-    loginAsync(data);
+    mockMode ? loginMock(data) : loginAsync(data);
   }
 
   return (
@@ -105,10 +106,17 @@ export default function Login(props) {
 
           <button
             onClick={handleLogin}
-            className="btn"
+            className={`btn  ${
+              loadingAuth ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
             disabled={loadingAuth || !emailValid || !passwordValid}
           >
-            {loadingAuth && "Logging In"}
+            {loadingAuth && (
+              <div className="w-full h-full flex justify-center items-center">
+                {" "}
+                <Loader /> <span className="ml-2">Logging in</span>{" "}
+              </div>
+            )}
             {!loadingAuth && "Login"}
           </button>
           <p className="bottom-text">

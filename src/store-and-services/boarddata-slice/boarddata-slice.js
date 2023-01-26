@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { dummyDataHonor } from "../../constants/app-data";
+import { mockMode } from "./../../config/config";
 const initialState = {
   boardList: [],
   languages: [],
@@ -9,6 +11,7 @@ export const boardDataSlice = createSlice({
   initialState,
   reducers: {
     addUsersToBoard: (state, { payload }) => {
+      console.log(payload);
       state.boardList = payload;
     },
     deleteUserFromBoard: (state, { payload }) => {
